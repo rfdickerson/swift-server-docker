@@ -1,26 +1,38 @@
-# SwiftCrossCompile
+# Swift on the Server Image
 
 Builds the Swift package for Linux and drops the executable in the present working directory.
 
-## Build the Docker image
-
-```
-docker build --tag rfdickerson/swift-server-docker .
-```
 
 ## Pull the image
 
-You can get the image from Dockerhub here:
+Before you use the image, you will need to pull it down. You can get the image from Dockerhub here:
 
-```
+```bash
 docker pull rfdickerson/swift-server-docker
 ```
 
 ## Run the compile
 
-Move to the directory that contains the project you want to build. There should be a `Package.swift` file located there.
+First, change to the directory that contains the project you want to build. For example, there should be a `Package.swift` file located there and a Sources directory. 
 
+Run the container:
+
+```bash
+sudo docker run -v $PWD:/root/project -t -i rfdickerson/swift-server-docker:latest ACTION
 ```
-sudo docker run -v $PWD:/root/project -t -i rfdickerson/swift-builder:latest
+
+1. Build - Builds project
+2. Test - Runs the Swift test cases
+3. Debug - Opens a lldb-server at :1234
+4. Run - Runs the server on port 8090
+
+## Build the Docker image
+
+If you plan on developing with this image, use:
+
+```bash
+docker build --tag rfdickerson/swift-server-docker .
 ```
+
+
 
