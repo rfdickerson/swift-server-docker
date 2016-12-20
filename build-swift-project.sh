@@ -8,15 +8,16 @@
 
 VERSION="1.0"
 
-
 function help {
   cat <<-!!EOF
     Usage: $CMD [ build | run | debug ]
 
     Where:
-      build   Compiles your project
-      run     Runs your project at localhost:8090
-      debug   Debugs your container
+      build                 Compiles your project
+      run                   Runs your project at localhost:8090
+      debug                 Debugs your container
+      test                  Run the test cases
+      install-system-libs   Install the system libraries from dependencies 
 !!EOF
 }
 
@@ -26,20 +27,37 @@ function debugServer {
 }
 
 #----------------------------------------------------------
-function buildProject {
+function installSystemLibraries {
+
   # Fetch all of the dependencies
-  swift package fetch
+  echo "Fetching dependencies"
+  # swift package fetch
+
+  echo "Installing system dependencies: "
+
+  # Update the Package cache
+  sudo apt-get update &> /dev/null 
+
+  egrep -R "Apt *\(" Packages/*/Package.swift \
+    | sed -e 's/^.*\.Apt *( *" *//' -e 's/".*$//' \
+    | xargs -n 1 echo
 
   # Install all the APT dependencies
   egrep -R "Apt *\(" Packages/*/Package.swift \
     | sed -e 's/^.*\.Apt *( *" *//' -e 's/".*$//' \
-    | xargs -n 1 sudo apt-get install -y
-  
-  exec swift build
+    | xargs -n 1 sudo apt-get install -y &> /dev/null
+}
+
+#----------------------------------------------------------
+function buildProject {
+
+  echo "Compiling the Swift project"
+  exec swift build -Xswiftc -I/usr/include/postgresql --build-path .build-linux
 }
 
 #----------------------------------------------------------
 function runTests {
+  echo "Running tests"
   swift test
 }
 
@@ -58,10 +76,12 @@ eval "$(swiftenv init -)"
 cd project
 
 case $ACTION in 
-"run")      run;;
-"build")    buildProject;;
-"debug")    debug;;
-*)          help;;
+"run")                 run;;
+"build")               installSystemLibraries && buildProject;;
+"debug")               debug;;
+"test")                runTests;;
+"install-system-libs") installSystemLibraries;;
+*)                     help;;
 esac
 
 # buildProject;;

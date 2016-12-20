@@ -28,6 +28,9 @@ ENV PATH $SWIFTENV_ROOT/bin:$PATH
 
 RUN swiftenv install 3.0.2
 
+EXPOSE 8090
+EXPOSE 1234
+
 COPY /build-swift-project.sh /
 ENTRYPOINT ["/build-swift-project.sh"]
 
