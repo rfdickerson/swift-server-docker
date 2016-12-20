@@ -5,7 +5,15 @@ Builds the Swift package for Linux and drops the executable in the present worki
 ## Build the Docker image
 
 ```
-docker build --tag rfdickerson/swift-builder .
+docker build --tag rfdickerson/swift-server-docker .
+```
+
+## Pull the image
+
+You can get the image from Dockerhub here:
+
+```
+docker pull rfdickerson/swift-server-docker
 ```
 
 ## Run the compile
