@@ -7,6 +7,7 @@
 # -----------------------------------------------------------
 
 VERSION="1.0"
+BUILD_DIR=".build-linux"
 
 function help {
   cat <<-!!EOF
@@ -51,14 +52,20 @@ function installSystemLibraries {
 #----------------------------------------------------------
 function buildProject {
 
-  echo "Compiling the Swift project"
-  exec swift build -Xswiftc -I/usr/include/postgresql --build-path .build-linux
+  echo "Compiling the Swift project..."
+  exec swift build -Xswiftc -I/usr/include/postgresql --build-path $BUILD_DIR
 }
 
 #----------------------------------------------------------
 function runTests {
-  echo "Running tests"
+  echo "Running tests..."
   swift test
+}
+
+#----------------------------------------------------------
+function runServer {
+  echo "Running server..."
+  $BUILD_DIR/debug/Server 
 }
 
 #----------------------------------------------------------
@@ -76,7 +83,7 @@ eval "$(swiftenv init -)"
 cd project
 
 case $ACTION in 
-"run")                 run;;
+"run")                 installSystemLibraries && runServer;;
 "build")               installSystemLibraries && buildProject;;
 "debug")               debug;;
 "test")                runTests;;
@@ -84,8 +91,4 @@ case $ACTION in
 *)                     help;;
 esac
 
-# buildProject;;
-
-# rm -rf .build 
-# rm -rf Packages
 
