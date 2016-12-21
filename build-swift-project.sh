@@ -32,7 +32,7 @@ function installSystemLibraries {
 
   # Fetch all of the dependencies
   echo "Fetching dependencies"
-  # swift package fetch
+  swift package fetch
 
   echo "Installing system dependencies: "
 
