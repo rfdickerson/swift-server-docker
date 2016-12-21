@@ -18,7 +18,7 @@ First, change to the directory that contains the project you want to build. For 
 Run the container:
 
 ```bash
-docker run -v $PWD:/root/project -t -i rfdickerson/swift-server-docker:latest ACTION
+docker run -v $PWD:/root/project -p 8090:8090 -t -i rfdickerson/swift-server-docker:latest ACTION
 ```
 
 1. Build - Builds project
