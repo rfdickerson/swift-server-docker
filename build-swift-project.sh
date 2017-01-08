@@ -53,7 +53,7 @@ function installSystemLibraries {
 function buildProject {
 
   echo "Compiling the Swift project..."
-  exec swift build -Xswiftc -I/usr/include/postgresql --build-path $BUILD_DIR
+  /root/swift-3.0.2-RELEASE-ubuntu16.04/usr/bin/swift build -Xswiftc -I/usr/include/postgresql --build-path $BUILD_DIR
 }
 
 #----------------------------------------------------------
@@ -76,16 +76,13 @@ ACTION="$1"
 
 [[ -z $ACTION ]] && help && exit 0
 
-# Initialize the SwiftEnv project environment
-eval "$(swiftenv init -)"
-
 # Enter the build directory
 cd project
 
 case $ACTION in 
 "run")                 installSystemLibraries && runServer;;
-"build")               installSystemLibraries && buildProject;;
-"debug")               debug;;
+"build")               buildProject;;
+"debug")               debugServer;;
 "test")                runTests;;
 "install-system-libs") installSystemLibraries;;
 *)                     help;;
