@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN wget https://swift.org/builds/swift-3.1-release/ubuntu1604/swift-3.1-RELEASE/swift-3.1-RELEASE-ubuntu16.04.tar.gz
 RUN tar xzvf swift-3.1-RELEASE-ubuntu16.04.tar.gz -C /root
-ENV PATH $PWD/swift-3.1-RELEASE-ubuntu16.04/bin:$PATH
+ENV PATH /root/swift-3.1-RELEASE-ubuntu16.04/usr/bin:$PATH
 
-EXPOSE 8090
+EXPOSE 8080
 EXPOSE 1234
 
 COPY /build-swift-project.sh /

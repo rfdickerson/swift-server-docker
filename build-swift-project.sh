@@ -79,7 +79,7 @@ ACTION="$1"
 cd project
 
 case $ACTION in 
-"run")                 installSystemLibraries && runServer;;
+"run")                 runServer;;
 "build")               buildProject;;
 "debug")               debugServer;;
 "test")                runTests;;
