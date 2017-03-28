@@ -63,8 +63,8 @@ function runTests {
 
 #----------------------------------------------------------
 function runServer {
-  echo "Running server..."
-  $BUILD_DIR/debug/Server 
+  echo "Running $2..."
+  $BUILD_DIR/debug/$PROGRAM_NAME
 }
 
 #----------------------------------------------------------
@@ -72,8 +72,11 @@ function runServer {
 # ---------------------------------------------------------
 
 ACTION="$1"
+PROGRAM_NAME="$2"
 
 [[ -z $ACTION ]] && help && exit 0
+
+[ "$ACTION" = "run" ] && [[ -z $PROGRAM_NAME ]] && help && exit 0
 
 # Enter the build directory
 cd project
