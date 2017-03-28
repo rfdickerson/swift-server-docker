@@ -51,9 +51,8 @@ function installSystemLibraries {
 
 #----------------------------------------------------------
 function buildProject {
-
   echo "Compiling the Swift project..."
-  /root/swift-3.0.2-RELEASE-ubuntu16.04/usr/bin/swift build -Xswiftc -I/usr/include/postgresql --build-path $BUILD_DIR
+  swift build --configuration debug --build-path $BUILD_DIR
 }
 
 #----------------------------------------------------------
