@@ -8,15 +8,13 @@ ENV WORK_DIR /root
 WORKDIR /root
 
 RUN apt-get update && apt-get install -y \
-  build-essential \
   clang \
   git \
   libicu-dev \
   wget \
   libcurl4-openssl-dev \
-  libxml2 \
-  sudo \
-  curl
+  libssl-dev \
+  libxml2-dev
 
 RUN wget https://swift.org/builds/swift-3.1-release/ubuntu1604/swift-3.1-RELEASE/swift-3.1-RELEASE-ubuntu16.04.tar.gz
 RUN tar xzvf swift-3.1-RELEASE-ubuntu16.04.tar.gz -C /root

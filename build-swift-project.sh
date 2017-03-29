@@ -68,6 +68,13 @@ function runServer {
 }
 
 #----------------------------------------------------------
+function cleanProject {
+  echo "Cleaning project"
+  swift package --build-path $BUILD_DIR clean
+  swift package update
+}
+
+#----------------------------------------------------------
 # MAIN
 # ---------------------------------------------------------
 
@@ -87,6 +94,7 @@ case $ACTION in
 "debug")               debugServer;;
 "test")                runTests;;
 "install-system-libs") installSystemLibraries;;
+"clean")               cleanProject;;
 *)                     help;;
 esac
 
